@@ -12,8 +12,6 @@ int arr[]=new int[n];
 
 System.out.println("Size of array is:"+arr.length);
 	
-
-	
 	}
 	
 	}
