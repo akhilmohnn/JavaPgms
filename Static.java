@@ -1,11 +1,12 @@
 import java.util.Scanner;
+
 public class Static {
     int a=10;
     static int b=20;
 
     public static void main(String arg[])
     {
-        Static h=new Static();
+        Static h=new Static(); 
         Static h1=new Static();
         System.out.print("h.a:"+h.a+"\n");
         
@@ -21,5 +22,6 @@ public class Static {
         System.out.println("h.a:"+h.a);
     }
 
+    
     
 }
