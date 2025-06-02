@@ -1,117 +1,86 @@
 import java.util.*;
 
+class Matrix {
+    int[][] a, b, sum, product;
+    int rows1, cols1, rows2, cols2;
 
-class Matrix{
+    void readMatrices() {
+        Scanner sc = new Scanner(System.in);
 
-int arr1[][];
-int arr2[][];
-int sum[][];
-int mul[][];
+        System.out.print("Enter rows and columns of Matrix A: ");
+        rows1 = sc.nextInt();
+        cols1 = sc.nextInt();
 
-	Matrix(int arr1[][],int arr2[][]){
-		this.arr1=arr1;
-		this.arr2=arr2;
-		this.sum=new int[arr1.length][arr1[0].length];
-		this.mul=new int[arr1.length][arr2[0].length];
-		}
+        System.out.print("Enter rows and columns of Matrix B: ");
+        rows2 = sc.nextInt();
+        cols2 = sc.nextInt();
 
-	void add()
-	{
-	int r1=arr1.length;
-	int c1=arr1[0].length;
-	for(int i=0;i<r1;i++){
-			for(int j=0;j<c1;j++)
-			{
-			sum[i][j]=arr1[i][j]+arr2[i][j];
-			}
-				}	
-		}
-		
-	void multiply(){
-		int r1=arr1.length;
-		int c1=arr1[0].length;
-		int c2=arr2[0].length;
-		
-		for(int i=0;i<r1;i++){
-			for(int j=0;j<c2;j++){
-				 mul[i][j]=0;
-			  for(int k=0;k<c1;k++){
-			  	mul[i][j]+=arr1[i][k]*arr2[k][j];
-			  }	
-				}
-			}
-		}		
-		
-		
-	void displaySum(){
-		
-		int r1 = arr1.length;
-		int c2=arr2[0].length;
-        	int c1 = arr1[0].length;
-		System.out.println("Sum of two arrrays are:");
-		for(int i=0;i<r1;i++){
-			for(int j=0;j<c1;j++)
-			{
-			System.out.print(sum[i][j]+" ");
-			}
-			System.out.println();
-				}
-				
-				
-		System.out.println("Multiple of two arrays are:");
-		for(int i=0;i<r1;i++){
-			for(int j=0;j<c2;j++)
-			{
-			System.out.print(mul[i][j]+" ");
-			}
-			System.out.println();
-				}		
-		}	
-	}
+        a = new int[rows1][cols1];
+        b = new int[rows2][cols2];
 
+        System.out.println("Enter elements of Matrix A:");
+        for (int i = 0; i < rows1; i++)
+            for (int j = 0; j < cols1; j++)
+                a[i][j] = sc.nextInt();
 
-class MatrixOperations{
-public static void main(String []args){
+        System.out.println("Enter elements of Matrix B:");
+        for (int i = 0; i < rows2; i++)
+            for (int j = 0; j < cols2; j++)
+                b[i][j] = sc.nextInt();
+    }
 
-Scanner sc=new Scanner(System.in);
+    void addMatrices() {
+        if (rows1 != rows2 || cols1 != cols2) {
+            System.out.println("Cannot add matrices of different sizes.");
+            sum = null;
+            return;
+        }
+        sum = new int[rows1][cols1];
+        for (int i = 0; i < rows1; i++)
+            for (int j = 0; j < cols1; j++)
+                sum[i][j] = a[i][j] + b[i][j];
+    }
 
+    void multiplyMatrices() {
+        if (cols1 != rows2) {
+            System.out.println("Cannot multiply matrices: columns of A must equal rows of B.");
+            product = null;
+            return;
+        }
+        product = new int[rows1][cols2];
+        for (int i = 0; i < rows1; i++)
+            for (int j = 0; j < cols2; j++) {
+                product[i][j] = 0;
+                for (int k = 0; k < cols1; k++)
+                    product[i][j] += a[i][k] * b[k][j];
+            }
+    }
 
-	System.out.print("Enter the row of matrix1:");
-	int rows1=sc.nextInt();
-	
-	
-	System.out.print("Enter the column of matrix1:");
-	int cols1=sc.nextInt();
-	
-	
-	System.out.print("Enter the row of matrix2:");
-	int rows2=sc.nextInt();
-	
-	
-	System.out.print("Enter the column of matrix2:");
-	int cols2=sc.nextInt();
+    void display() {
+        if (sum != null) {
+            System.out.println("Sum of matrices:");
+            for (int i = 0; i < sum.length; i++) {
+                for (int j = 0; j < sum[0].length; j++)
+                    System.out.print(sum[i][j] + " ");
+                System.out.println();
+            }
+        }
 
-int arr1[][]=new int[rows1][cols1];
-int arr2[][]=new int[rows2][cols2];
+        if (product != null) {
+            System.out.println("Product of matrices:");
+            for (int i = 0; i < product.length; i++) {
+                for (int j = 0; j < product[0].length; j++)
+                    System.out.print(product[i][j] + " ");
+                System.out.println();
+            }
+        }
+    }
 
-	
-	System.out.println("Enter the first array elements:");
-	for(int i=0;i<rows1;i++){
-		for(int j=0;j<cols1;j++){
-		arr1[i][j]=sc.nextInt();
-			}
-		}
-	
-	System.out.println("Enter the second array elements:");
-	for(int i=0;i<rows2;i++){
-		for(int j=0;j<cols2;j++){
-		arr2[i][j]=sc.nextInt();	
-		}	}
-		
-	Matrix matrixop = new Matrix(arr1,arr2);
-        matrixop.add();
-        matrixop.multiply();
-        matrixop.displaySum();			
-	
-		}
-	}
+    public static void main(String[] args) {
+        Matrix m = new Matrix();
+        m.readMatrices();
+        m.addMatrices();
+        m.multiplyMatrices();
+        m.display();
+    }
+}
